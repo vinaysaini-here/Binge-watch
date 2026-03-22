@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BingeWatch
 
-## Getting Started
+BingeWatch is a video streaming platform inspired by YouTube, but users submit external YouTube or Vimeo links instead of uploading raw video files.
 
-First, run the development server:
+The platform stores metadata only:
+
+- source URL
+- platform and external video ID
+- title
+- description
+- tags
+- thumbnail
+
+## Features
+
+- JWT register and login
+- Creator profiles with avatar and bio
+- External video submission, editing, and deletion
+- Custom embedded player UI for YouTube and Vimeo
+- Double tap seek and hold-for-2x mobile gestures
+- Latest and trending homepage feeds
+- Search and platform filters
+- Like and comments system
+- User dashboard with basic analytics
+- Dedicated upload instruction page
+- SEO metadata, robots, and sitemap
+
+## Tech Stack
+
+- Next.js 16 App Router
+- React 19
+- Tailwind CSS 4
+- Framer Motion
+- Three.js with `@react-three/fiber`
+- MongoDB native driver
+- `jose` for JWT
+- `bcryptjs` for password hashing
+
+## Folder Structure
+
+```text
+app/
+  api/
+  dashboard/
+  discover/
+  login/
+  profile/[username]/
+  register/
+  watch/[id]/
+components/
+  dashboard/
+  feed/
+  layout/
+  player/
+  providers/
+  three/
+  video/
+lib/
+  auth.js
+  data.js
+  db.js
+  http.js
+  session.js
+  validators.js
+  video-platforms.js
+```
+
+## Environment Variables
+
+Create `.env.local`:
+
+```bash
+MONGODB_URI=mongodb://127.0.0.1:27017/binge-watch
+MONGODB_DB=binge-watch
+JWT_SECRET=replace-with-a-long-random-secret
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## Local Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start MongoDB locally or use MongoDB Atlas.
+
+3. Add the environment variables shown above.
+
+4. Run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment Guide
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Vercel
 
-## Learn More
+1. Push the repository to GitHub.
+2. Import the repository into Vercel.
+3. Add `MONGODB_URI`, `MONGODB_DB`, `JWT_SECRET`, and `NEXT_PUBLIC_APP_URL`.
+4. Set `NEXT_PUBLIC_APP_URL` to your production URL.
+5. Deploy.
 
-To learn more about Next.js, take a look at the following resources:
+### MongoDB Atlas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Create a cluster.
+2. Create a database user.
+3. Add network access for your deployment.
+4. Copy the connection string into `MONGODB_URI`.
+5. Set `MONGODB_DB` to the database name you want BingeWatch to use.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Direct file uploads are intentionally not supported.
+- The custom player stack is built for YouTube and Vimeo embeds.
+- Thumbnails are auto-derived unless a custom thumbnail is provided.
+- MongoDB indexes are created lazily on first use.
